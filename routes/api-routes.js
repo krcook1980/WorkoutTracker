@@ -1,15 +1,14 @@
 const router = require("express").Router();
-const Workout = require("../models");
-const { db } = require("../models/workout");
+const db = require("../models");
 
 
 
 //get last workout
 router.get("/api/workouts", (req, res) => {
     db.Workout.find({})
-    .sort({day: -1})
-    .then(workouts => {
-        res.json(workouts)
+    .then(lastWorkout => {
+       
+        res.json(lastWorkout)
     }).catch(err => {
         res.status(400).json(err);
       });
@@ -17,13 +16,13 @@ router.get("/api/workouts", (req, res) => {
 
 //add exercises to most recent workout
 router.post("/api/workouts/:id", (req, res) => {
-    db.Workout.uptate(
+    db.Workout.update(
         {
             id: mongojs.ObjectId(req.params.id)
         },
         {
             $set: {
-                
+
             }
         }
     )
