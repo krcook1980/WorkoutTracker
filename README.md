@@ -31,7 +31,7 @@
    No need to contribute at this time.
 
   ## Questions
-   Please see my [GitHub profile](https://github.com/krcook1980)
+   Please see my [GitHub profile](https://github.com/krcook1980)  
    You can also email me questions at: kellyrcook1980@gmail.com
 
 
