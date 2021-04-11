@@ -15,17 +15,19 @@ router.get("/api/workouts", (req, res) => {
 })
 
 //add exercises to most recent workout
-router.post("/api/workouts/:id", (req, res) => {
-    db.Workout.update(
+router.put("/api/workouts/:id", (req, res) => {
+    db.Workout.findOneAndUpdate(
         {
-            id: mongojs.ObjectId(req.params.id)
+            _id: req.params.id
         },
         {
-            $set: {
-//I don't know what goes in here... exercises: { body?}
-            }
+            $push: {exercises: req.body} 
         }
+        
     )
+    .catch(err => {
+        res.json(err);
+    });
 })
 
 //new workout plan
