@@ -6,24 +6,24 @@ const db = require("../models");
 
 //get last workout
 router.get("/api/workouts", (req, res) => {
-    db.Workout.find({})
+    db.Workout.aggregate([
+        {
+            $addFields: {
+               totalDuration: {$sum: "$exercises.duration"}
+            }  
+        }
+    ])
         .then(lastWorkout => {
-            let totalDuration = 0;
-            lastWorkout.forEach(workout => {
-                totalDuration += workout.exercises.duration
-                })
-          
             res.json(lastWorkout)
-        }).catch(err => {
+        })
+        .catch(err => {
             res.status(400).json(err);
         });
 })
 
 //add exercises to most recent workout
 router.put("/api/workouts/:id", (req, res) => {
-    console.log("What is my id " + JSON.stringify(req.params.id))
-
-    db.Workout.findOneAndUpdate(
+     db.Workout.findOneAndUpdate(
         {
             _id: req.params.id
         },
@@ -32,33 +32,37 @@ router.put("/api/workouts/:id", (req, res) => {
             $inc: { totalDuration: req.body.duration }
         },
 
-    )
+    ).then(dbWorkout => {
+        res.json(dbWorkout)
+       })
         .catch(err => {
             res.json(err);
         });
 })
 
 //new workout plan
-router.post("api/workouts", ({ data }, res) => {
-    console.log("New guy " + JSON.stringify(data))
+router.post("/api/workouts", ({ data }, res) => {
+    
     db.Workout.create(data)
         .then(dbWorkout => {
-            res.json(dbWorkout)
+         res.json(dbWorkout)
         })
         .catch(err => {
             res.status(400).json(err)
         })
 })
 
-//add exercises to new workout plan
-
 //stats view weight of multiple exercises from past 7
 router.get("/api/workouts/range", (req, res) => {
-    db.Workout.find()
-        .sort({ _id: -1 })
-        .limit(7)
+    db.Workout.aggregate([
+        {
+            $addFields: {
+               totalDuration: {$sum: "$exercises.duration"}
+            }  
+        }
+    ])
         .then(workoutRange => {
-            res.json(workoutRange)
+           res.json(workoutRange)
         })
         .catch(err => {
             res.status(400).json(err);
