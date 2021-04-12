@@ -1,15 +1,15 @@
 # WorkoutTracker [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
   
+  <img src="https://github.com/krcook1980/WorkoutTracker/blob/main/public/assets/index.JPG">  
+  <img src="https://github.com/krcook1980/WorkoutTracker/blob/main/public/assets/stats.JPG">
 ---
   ## Description
    Generate Workout Tracker with node, express, Mongoose, and MongoDB. Functions include:
    - Look at previous workout
    - Add exercises to workout
    - Create New workout
-   - Delete a workout
-   
-   
-
+   - See graphs of previous workout statistics
+ 
   ## License
    [View Full MIT License](https://opensource.org/licenses/MIT)
 
@@ -22,7 +22,8 @@
 
 
   ## Installation
-   Use npm i for the package.json, 
+   Use npm i for the package.json, npm run seed for the seeder file (MongoDb)
+   
   ## Usage
 
    In the terminal, use node server.js, navigate to localhost
