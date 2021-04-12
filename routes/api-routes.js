@@ -9,7 +9,11 @@ router.get("/api/workouts", (req, res) => {
     db.Workout.aggregate([
         {
             $addFields: {
-               totalDuration: {$sum: "$exercises.duration"}
+               totalDuration: {$sum: "$exercises.duration"},
+               totalDistance: {$sum: "$exercises.distance"},
+               totalSets: {$sum: "$exercises.sets"},
+               totalReps: {$sum: "$exercises.reps"},
+               totalWeight: {$sum: "$exercises.weight"}
             }  
         }
     ])
@@ -57,7 +61,11 @@ router.get("/api/workouts/range", (req, res) => {
     db.Workout.aggregate([
         {
             $addFields: {
-               totalDuration: {$sum: "$exercises.duration"}
+               totalDuration: {$sum: "$exercises.duration"},
+               totalDistance: {$sum: "$exercises.distance"},
+               totalSets: {$sum: "$exercises.sets"},
+               totalReps: {$sum: "$exercises.reps"},
+               totalWeight: {$sum: "$exercises.weight"}
             }  
         }
     ])

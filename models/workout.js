@@ -38,11 +38,7 @@ const workoutSchema = new Schema(
                     default: 0,
                 },
             }
-        ],
-        totalDuration: {
-            type: Number,
-            default: 0,
-        },
+        ]
     })
 
     
