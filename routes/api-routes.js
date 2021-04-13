@@ -17,6 +17,7 @@ router.get("/api/workouts", (req, res) => {
             }  
         }
     ])
+    .sort(-1)
     .limit(7)
         .then(lastWorkout => {
             res.json(lastWorkout)
