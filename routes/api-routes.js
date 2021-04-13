@@ -9,16 +9,16 @@ router.get("/api/workouts", (req, res) => {
     db.Workout.aggregate([
         {
             $addFields: {
-               totalDuration: {$sum: "$exercises.duration"},
-               totalDistance: {$sum: "$exercises.distance"},
-               totalSets: {$sum: "$exercises.sets"},
-               totalReps: {$sum: "$exercises.reps"},
-               totalWeight: {$sum: "$exercises.weight"}
-            }  
-        }
+                totalDuration: { $sum: "$exercises.duration" },
+                totalDistance: { $sum: "$exercises.distance" },
+                totalSets: { $sum: "$exercises.sets" },
+                totalReps: { $sum: "$exercises.reps" },
+                totalWeight: { $sum: "$exercises.weight" }
+            }
+        },
+
     ])
-    // .sort(-1)
-    // .limit(7)
+
         .then(lastWorkout => {
             res.json(lastWorkout)
         })
@@ -29,7 +29,7 @@ router.get("/api/workouts", (req, res) => {
 
 //add exercises to most recent workout
 router.put("/api/workouts/:id", (req, res) => {
-     db.Workout.findOneAndUpdate(
+    db.Workout.findOneAndUpdate(
         {
             _id: req.params.id
         },
@@ -40,7 +40,7 @@ router.put("/api/workouts/:id", (req, res) => {
 
     ).then(dbWorkout => {
         res.json(dbWorkout)
-       })
+    })
         .catch(err => {
             res.json(err);
         });
@@ -48,10 +48,10 @@ router.put("/api/workouts/:id", (req, res) => {
 
 //new workout plan
 router.post("/api/workouts", ({ data }, res) => {
-    
+
     db.Workout.create(data)
         .then(dbWorkout => {
-         res.json(dbWorkout)
+            res.json(dbWorkout)
         })
         .catch(err => {
             res.status(400).json(err)
@@ -63,16 +63,22 @@ router.get("/api/workouts/range", (req, res) => {
     db.Workout.aggregate([
         {
             $addFields: {
-               totalDuration: {$sum: "$exercises.duration"},
-               totalDistance: {$sum: "$exercises.distance"},
-               totalSets: {$sum: "$exercises.sets"},
-               totalReps: {$sum: "$exercises.reps"},
-               totalWeight: {$sum: "$exercises.weight"}
-            }  
+                totalDuration: { $sum: "$exercises.duration" },
+                totalDistance: { $sum: "$exercises.distance" },
+                totalSets: { $sum: "$exercises.sets" },
+                totalReps: { $sum: "$exercises.reps" },
+                totalWeight: { $sum: "$exercises.weight" }
+            }
+        },
+        {
+            "$sort": { _id: -1 }
+        },
+        {
+            "$limit": 7
         }
     ])
         .then(workoutRange => {
-           res.json(workoutRange)
+            res.json(workoutRange)
         })
         .catch(err => {
             res.status(400).json(err);
