@@ -1,6 +1,6 @@
 # WorkoutTracker [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
 ---
-  [Deployed Application]("https://krc-workout-tracker.herokuapp.com/")
+  [Deployed Application](https://krc-workout-tracker.herokuapp.com/)
 ---  
   ## Description
    Generate Workout Tracker with node, express, Mongoose, and MongoDB. Functions include:
